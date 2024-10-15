@@ -8,15 +8,18 @@ import numpy as np
 
 from presto import pulsed
 
-INPUT_PORT = 9
-OUTPUT_PORT = 9
+import utils
 
-ADDRESS = "192.168.20.4"  # set address/hostname of Vivace here
+INPUT_PORT = 1
+OUTPUT_PORT = 1
+
+ADDRESS, PORT = utils.address_port_from_cli()
 EXT_REF = False  # set to True to use external 10 MHz reference
 
 with pulsed.Pulsed(
     ext_ref_clk=EXT_REF,
     address=ADDRESS,
+    port=PORT,
     adc_mode=pulsed.AdcMode.Direct,
     dac_mode=pulsed.DacMode.Direct,
 ) as pls:
@@ -58,5 +61,6 @@ fig, ax = plt.subplots(10, figsize=(6.4, 9.6), sharex=True, sharey=True, tight_l
 for i in range(10):
     ax[i].plot(1e6 * t_arr, data[i, 0, :], label=f"{f[i] / 1e6:.1f} MHz")
     ax[i].legend(loc="upper right")
+    ax[i].grid()
 ax[-1].set_xlabel("Time [us]")
-fig.show()
+utils.show(plt, fig)

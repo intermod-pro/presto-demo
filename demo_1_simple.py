@@ -8,15 +8,23 @@ import numpy as np
 
 from presto import pulsed
 
-OUTPUT_PORT = 9
-INPUT_PORT = 9
+import utils
 
-ADDRESS = "192.168.20.4"  # set address/hostname of Presto here
+OUTPUT_PORT = 1
+INPUT_PORT = 1
+
+# get IP address as argument from the command line
+# you can also set it explicitly, e.g.:
+# ADDRESS = "192.168.20.02"
+# PORT = None  # default setting
+ADDRESS, PORT = utils.address_port_from_cli()
+
 EXT_REF = False  # set to True to use external 10 MHz reference
 
 with pulsed.Pulsed(
     ext_ref_clk=EXT_REF,
     address=ADDRESS,
+    port=PORT,
     adc_mode=pulsed.AdcMode.Direct,
     dac_mode=pulsed.DacMode.Direct,
 ) as pls:
@@ -54,4 +62,5 @@ ax.plot(1e9 * t_arr, data[0, 0, :], label="store 0, port 0")
 ax.set_xlabel("Time [ns]")
 ax.set_ylabel("Input signal [FS]")
 ax.legend()
-fig.show()
+ax.grid()
+utils.show(plt, fig)

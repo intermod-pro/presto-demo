@@ -16,11 +16,13 @@ import numpy as np
 
 from presto import pulsed
 
-ADDRESS = "192.168.20.4"  # set address/hostname of Presto here
+import utils
+
+ADDRESS, PORT = utils.address_port_from_cli()
 EXT_REF = False  # set to True to use external 10 MHz reference
 
-OUTPUT_PORTS = range(9, 17)
-INPUT_PORTS = range(9, 17)
+OUTPUT_PORTS = range(1, 9)
+INPUT_PORTS = range(1, 9)
 assert len(OUTPUT_PORTS) == len(INPUT_PORTS)
 NR_PORTS = len(OUTPUT_PORTS)
 
@@ -28,6 +30,7 @@ store_duration = 2e-6
 with pulsed.Pulsed(
     ext_ref_clk=EXT_REF,
     address=ADDRESS,
+    port=PORT,
     adc_mode=pulsed.AdcMode.Direct,
     dac_mode=pulsed.DacMode.Direct,
 ) as pls:
@@ -77,10 +80,9 @@ with pulsed.Pulsed(
     pls.run(period=spacing * 16, repeat_count=1, num_averages=1)
     t_arr, data = pls.get_store_data()
 
-fig, ax = plt.subplots(NR_PORTS, 16, sharex=True, sharey=True)
+fig, ax = plt.subplots(NR_PORTS, 16, sharex=True, sharey=True, tight_layout=True)
 for port in range(NR_PORTS):
     for store in range(16):
         ax[port, store].plot(t_arr, data[store, port, :])
         ax[port, store].axis("off")
-fig.tight_layout()
-fig.show()
+utils.show(plt, fig)

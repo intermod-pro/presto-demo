@@ -1,10 +1,13 @@
-from presto import lockin, utils
-from presto.hardware import AdcMode, DacMode
 from matplotlib import pyplot as plt
 import numpy as np
 
+from presto import lockin
+from presto.hardware import AdcMode, DacMode
+from presto.utils import untwist_downconversion
 
-ADDRESS = "192.168.20.20"  # Presto's IP address
+import utils
+
+ADDRESS, PORT = utils.address_port_from_cli()
 EXT_REF_CLK = False  # set to True to lock to an external 10 MHz reference
 DAC_CURRENT = 40_500  # sets analog output range, 2250 to 40500
 
@@ -30,6 +33,7 @@ IF_FREQS_IN = [0.0, 50e6]
 
 with lockin.Lockin(
     address=ADDRESS,
+    port=PORT,
     ext_ref_clk=EXT_REF_CLK,
     adc_mode=AdcMode.Mixed,
     dac_mode=DacMode.Mixed,
@@ -65,11 +69,12 @@ with lockin.Lockin(
     lck.apply_settings()
 
 freq, pixel_i, pixel_q = pixel_dict[INPUT_PORT]
-lsb, hsb = utils.untwist_downconversion(pixel_i, pixel_q)
+lsb, hsb = untwist_downconversion(pixel_i, pixel_q)
+
 fig, ax = plt.subplots(tight_layout=True, figsize=(6, 2.5))
 ax.plot((LO_FREQ + np.array(IF_FREQS_IN)) * 1e-6, np.mean(np.real(hsb), axis=0), "C0o", label="re")
 ax.plot((LO_FREQ + np.array(IF_FREQS_IN)) * 1e-6, np.mean(np.imag(hsb), axis=0), "C1o", label="im")
 ax.legend()
 ax.set_xlabel("Frequency (MHz)")
 ax.set_ylabel("Amplitude (FS)")
-plt.show()
+utils.show(plt, fig)

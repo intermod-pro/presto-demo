@@ -8,10 +8,12 @@ import numpy as np
 
 from presto import pulsed
 
-INPUT_PORT = 9
-OUTPUT_PORT = 9
+import utils
 
-ADDRESS = "192.168.20.4"  # set address/hostname of Vivace here
+INPUT_PORT = 1
+OUTPUT_PORT = 1
+
+ADDRESS, PORT = utils.address_port_from_cli()
 EXT_REF = False  # set to True to use external 10 MHz reference
 
 with pulsed.Pulsed(
@@ -77,4 +79,4 @@ for freq in range(NFREQ):
     for scale in range(NSCALES):
         ax[freq, scale].plot(1e6 * t_arr, data[scale * NFREQ + freq, 0, :])
         ax[freq, scale].axis("off")
-fig.show()
+utils.show(plt, fig)

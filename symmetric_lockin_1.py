@@ -11,14 +11,16 @@ from scipy.signal import firwin
 from presto.hardware import AdcMode, DacMode
 from presto import lockin
 
-ADDRESS = "192.168.20.4"  # Presto's IP address
+import utils
+
+ADDRESS, PORT = utils.address_port_from_cli()
 
 # ******************************
 # *** define some parameters ***
 # ******************************
 
-INPUT_PORT = 10
-OUTPUT_PORT = 10  # can be a list
+INPUT_PORT = 1
+OUTPUT_PORT = 1  # can be a list
 
 # 1 MHz, demodulation rate
 DF = 1.0 * 1e6
@@ -58,7 +60,7 @@ CONVERTER_CONFIGURATION = {
 # ********************************
 
 # This will connect to the hardware
-with lockin.SymmetricLockin(address=ADDRESS, **CONVERTER_CONFIGURATION) as lck:
+with lockin.SymmetricLockin(address=ADDRESS, port=PORT, **CONVERTER_CONFIGURATION) as lck:
     # ***********************************
     # *** Configure hardware features ***
     # ***********************************
@@ -136,9 +138,9 @@ assert data_raw.shape == (NR_RAW_MEAS, NR_FREQS)
 assert data_mean.shape == (NR_MEAS, NR_FREQS)
 assert data_std.shape == (NR_MEAS, NR_FREQS)
 # and complex data type for data_raw and data_mean, and real for data_std
-assert data_raw.dtype == np.complex128
-assert data_mean.dtype == np.complex128
-assert data_std.dtype == np.complex128
+assert data_raw.dtype == np.complex64
+assert data_mean.dtype == np.complex64
+assert data_std.dtype == np.complex64
 data_std = np.abs(data_std)
 
 # *****************************
@@ -174,4 +176,4 @@ ax12.set_ylabel("Mean, imag")
 ax13.set_ylabel("Std")
 ax13.set_xlabel("Time [ms]")
 ax11.legend(ncol=2)
-fig1.show()
+utils.show(plt, fig1)

@@ -17,17 +17,19 @@ import matplotlib.pyplot as plt
 from presto import lockin
 from presto.utils import untwist_downconversion
 
+import utils
+
 
 # address of the instrument used
-ADDRESS = "192.168.20.4"
+ADDRESS, PORT = utils.address_port_from_cli()
 
 # input port used in this measurement
-INPUT_PORT = 9
+INPUT_PORT = 1
 
 # output ports used in this meeasurement
 # A group of frequencies can be output on any number of ports,
 # output one for loopback and one for monitoring witn oscilloscope.
-OUTPUT_PORTS = [9, 10]
+OUTPUT_PORTS = [1, 2]
 
 # Use a high df when sweeping to cover a wide frequency range with a
 # resonable number of points
@@ -60,6 +62,7 @@ fig.show()
 with lockin.Lockin(
     ext_ref_clk=False,
     address=ADDRESS,
+    port=PORT,
     adc_mode=lockin.AdcMode.Mixed,
     dac_mode=lockin.DacMode.Mixed,
 ) as lck:

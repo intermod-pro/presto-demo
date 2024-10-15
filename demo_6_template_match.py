@@ -12,11 +12,13 @@ import numpy as np
 
 from presto import pulsed
 
-INPUT_PORT = 9
-OUTPUT_PORT = 9
+import utils
+
+INPUT_PORT = 1
+OUTPUT_PORT = 1
 freq = 100e6  # Hz
 
-ADDRESS = "192.168.20.4"  # set address/hostname of Vivace here
+ADDRESS, PORT = utils.address_port_from_cli()
 EXT_REF = False  # set to True to use external 10 MHz reference
 
 with pulsed.Pulsed(
@@ -107,7 +109,7 @@ fig1, ax1 = plt.subplots(8, sharex=True, sharey=True, tight_layout=True, figsize
 for i in range(8):
     ax1[i].plot(1e6 * t_arr, data[i * 64, 0, :])
     ax1[i].axis("off")
-fig1.show()
+utils.show(plt, fig1)
 
 # Plot template match data as points in the I/Q plane
 fig2, ax2 = plt.subplots(tight_layout=True)
@@ -122,4 +124,5 @@ ax2.scatter(
 ax2.set_aspect("equal")
 ax2.set_xlabel("I quadrature")
 ax2.set_ylabel("Q quadrature")
-fig2.show()
+ax2.grid()
+utils.show(plt, fig2)

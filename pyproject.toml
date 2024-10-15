@@ -4,6 +4,12 @@ line-length = 99
 [tool.pylint.format]
 max-line-length = 99
 
+[tool.pyright]
+reportMissingImports = false
+
+[tool.ruff]
+line-length = 99
+
 [tool.yapf]
 based_on_style = "pep8"
 column_limit = 99

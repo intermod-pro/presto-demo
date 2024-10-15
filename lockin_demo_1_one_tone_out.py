@@ -1,9 +1,14 @@
 from presto import lockin
 from presto.hardware import AdcMode, DacMode
-from matplotlib import pyplot as plt
-import numpy as np
 
-ADDRESS = "192.168.20.20"  # Presto's IP address
+import utils
+
+# get IP address as argument from the command line
+# you can also set it explicitly, e.g.:
+# ADDRESS = "192.168.20.02"
+# PORT = None  # default setting
+ADDRESS, PORT = utils.address_port_from_cli()
+
 EXT_REF_CLK = False  # set to True to lock to an external 10 MHz reference
 DAC_CURRENT = 40_500  # sets analog output range, 2250 to 40500
 
@@ -18,6 +23,7 @@ DF = 1e3  # Hz, frequency resolution, 1 Hz to 1 MHz
 
 with lockin.Lockin(
     address=ADDRESS,
+    port=PORT,
     ext_ref_clk=EXT_REF_CLK,
     adc_mode=AdcMode.Mixed,
     dac_mode=DacMode.Mixed,
