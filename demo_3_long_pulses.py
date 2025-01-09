@@ -52,13 +52,14 @@ with pulsed.Pulsed(
 
     # a pulse with the sampe lenght, with 1 us rise time and 1 us fall time
     duration = N / pls.get_fs("dac")
-    template_2 = pls.setup_long_drive(
+    template_2 = pls.setup_flat_pulse(
         output_port=port,
         group=group,
         duration=duration,
         amplitude=1.0,
         rise_time=1.0e-6,
         fall_time=1.0e-6,
+        envelope=True,
     )
 
     ######################################################################

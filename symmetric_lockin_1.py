@@ -6,7 +6,7 @@ and some mean and standard deviation at 4 kHz rate. Compare the results and plot
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.signal import firwin
+from scipy.signal import firwin, fftconvolve
 
 from presto.hardware import AdcMode, DacMode
 from presto import lockin
@@ -112,7 +112,7 @@ with lockin.SymmetricLockin(address=ADDRESS, port=PORT, **CONVERTER_CONFIGURATIO
     _, data_raw = lck.get_pixels(
         n=NR_RAW_MEAS,
         summed=False,  # "raw" lock-in measurements
-        fir_coeffs=fir_coeffs,  # low-pass filter
+        fir_coeffs=None,
     )[INPUT_PORT]
 
     # Acquire 100 mean and std measurements at 4 kHz rate = 1 MHz / 250
@@ -147,9 +147,12 @@ data_std = np.abs(data_std)
 # *** Analyze and plot data ***
 # *****************************
 
-# "manually" calculate mean and standard deviation of raw data
+# "manually" apply low-pass filter and
+# calculate mean and standard deviation of raw data
 # in chunks of 250 measurements
 # and compare to mean and std calculated by Presto
+for j in range(NR_FREQS):
+    data_raw[:, j] = fftconvolve(data_raw[:, j], fir_coeffs, mode="same")
 manual_mean = np.zeros((NR_MEAS, NR_FREQS), np.complex128)
 manual_std = np.zeros((NR_MEAS, NR_FREQS), np.float64)
 data2 = np.reshape(data_raw, (NR_MEAS, NSUM, NR_FREQS))

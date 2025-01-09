@@ -66,8 +66,8 @@ with lockin.Lockin(
 
 freq, pixel_i, pixel_q = pixel_dict[INPUT_PORT]
 fig, ax = plt.subplots(tight_layout=True, figsize=(6, 2.5))
-ax.plot(LO_FREQ * 1e-6, np.mean(pixel_i), "C0o", label="re")
-ax.plot(LO_FREQ * 1e-6, np.mean(pixel_q), "C1o", label="im")
+ax.plot(LO_FREQ * 1e-6, np.mean(pixel_i).real, "C0o", label="re")
+ax.plot(LO_FREQ * 1e-6, np.mean(pixel_q).real, "C1o", label="im")
 ax.legend()
 ax.set_xlabel("Frequency (MHz)")
 ax.set_ylabel("Amplitude (FS)")
