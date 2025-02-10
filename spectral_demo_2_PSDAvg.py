@@ -41,7 +41,7 @@ with Spectral(nr_inputs=2, address=ADDRESS, port=PORT, ext_ref_clk=False) as spe
     p2 = [0.0, 0.0]
     spec.output_multicos(OUT_PORT_2, period, f2, a2, p2)
 
-    spec.setup_delay(pre_delay=206e-9, start_delay=0.0, end_delay=0.0)
+    spec.setup_delay(pre_delay=300e-9, start_delay=0.0, end_delay=0.0)
 
     res = spec.measure(SpecMode.Psd, [IN_PORT_1, IN_PORT_2], 1000, period)
 

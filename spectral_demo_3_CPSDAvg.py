@@ -47,7 +47,7 @@ with Spectral(nr_inputs=len(IN_PORTS), address=ADDRESS, port=PORT, ext_ref_clk=F
     data2 = np.roll(data1, 100)
     spec.output_waveform(OUT_PORTS[1], data2)
 
-    spec.setup_delay(pre_delay=206e-9, start_delay=0.0, end_delay=0.0)
+    spec.setup_delay(pre_delay=300e-9, start_delay=0.0, end_delay=0.0)
 
     # measure cross power spectral density (CPSD) data
     # averaged 1000 times

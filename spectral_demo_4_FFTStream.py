@@ -41,7 +41,7 @@ with Spectral(nr_inputs=2, address=ADDRESS, port=PORT, ext_ref_clk=False) as spe
     p2 = [0.0, 0.0]
     spec.output_multicos(OUT_PORT_2, period, f2, a2, p2)
 
-    spec.setup_delay(pre_delay=206e-9, start_delay=0.0, end_delay=0.0)
+    spec.setup_delay(pre_delay=300e-9, start_delay=250.0e-9, end_delay=500.0e-9)
 
     res = spec.measure(SpecMode.FftStream, [IN_PORT_1, IN_PORT_2], 3, period)
 
@@ -50,7 +50,6 @@ x = np.fft.fftshift(res.freqs) / 1.0e6
 # data in dBFS
 y0 = np.fft.fftshift(res.to_db()[:, 0, :])
 y1 = np.fft.fftshift(res.to_db()[:, 1, :])
-
 fig, ax = plt.subplots(2, 1, tight_layout=True, figsize=(6, 5))
 for i in range(y0.shape[0]):
     ax[0].plot(x, y0[i], label=str(i))
