@@ -1,3 +1,16 @@
+[project]
+name = "presto-demo"
+version = "0.1.0"
+authors = [
+    {name = "Intermodulation Products AB", email = "support@intermod.pro"},
+]
+description = "Demo scripts for the Presto platform runnable in loop-back"
+license = "MIT"
+requires-python = ">= 3.10"
+dependencies = [
+    "numpy >= 1.24",
+]
+
 [tool.black]
 line-length = 99
 
@@ -5,8 +18,10 @@ line-length = 99
 max-line-length = 99
 
 [tool.pyright]
-reportMissingImports = false
 typeCheckingMode = "standard"
+deprecateTypingAliases = true
+reportDeprecated = "warning"
+reportMissingImports = false
 
 [tool.ruff]
 line-length = 99

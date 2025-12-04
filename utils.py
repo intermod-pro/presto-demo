@@ -1,8 +1,7 @@
 import sys
-from typing import Optional, Tuple
 
 
-def address_port_from_cli() -> Tuple[str, Optional[int]]:
+def address_port_from_cli() -> tuple[str, int | None]:
     """Get IP address and port number as parameters to the script.
 
     Port number is optional. Print usage information if failing to get IP address.
