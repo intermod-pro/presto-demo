@@ -7,6 +7,8 @@ Plot the results in the IQ plane.
 Connect Out 9 to In 9.
 """
 
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import numpy as np
 

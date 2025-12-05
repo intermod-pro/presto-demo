@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
 """Drive a frequency comb with 192 tones equally spaced between 2254 MHz and 2445 MHz. All tones
 have same amplitude and random (fixed) phase. Acquire some raw lock-in measurements at 1 MHz rate,
 and some mean and standard deviation at 4 kHz rate. Compare the results and plot.
 """
+
+from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np

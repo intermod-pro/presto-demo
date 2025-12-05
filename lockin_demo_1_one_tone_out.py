@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from presto import lockin
 from presto.hardware import AdcMode, DacMode
 

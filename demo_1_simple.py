@@ -3,6 +3,8 @@
 Connect output port 9 directly to input port 9 (loopback)
 """
 
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import numpy as np
 

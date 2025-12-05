@@ -11,6 +11,8 @@ Connect outputs 9-16 to inputs 9-16 loop-back:
 Out 9 to In 9, Out 10 to In 10, ...
 """
 
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import numpy as np
 

@@ -11,6 +11,8 @@ Connect output port 9 to input port 9, optionally monitor output
 with oscilloscope on port 10.
 """
 
+from __future__ import annotations
+
 import numpy as np
 import matplotlib.pyplot as plt
 

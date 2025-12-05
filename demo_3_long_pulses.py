@@ -5,6 +5,8 @@ Also demonstrate the convenience method setup_long_drive.
 Connect Out 9 to In 9 and Out 10 to In 10.
 """
 
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import numpy as np
 
