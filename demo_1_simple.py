@@ -12,8 +12,8 @@ from presto import pulsed
 
 import utils
 
-OUTPUT_PORT = 3
-INPUT_PORT = 3
+OUTPUT_PORT = 1
+INPUT_PORT = 1
 
 # get IP address as argument from the command line
 # you can also set it explicitly, e.g.:

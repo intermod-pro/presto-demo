@@ -100,7 +100,7 @@ with lockin.SymmetricLockin(address=ADDRESS, port=PORT, **CONVERTER_CONFIGURATIO
 
     # actually upload parameters to the hardware and apply settings
     lck.apply_settings()
-    lck.hardware.sleep(10)
+    lck.hardware.sleep(1)
 
     # the frequency comb will be output starting from now!
 

@@ -33,6 +33,8 @@ DF = 1e3  # Hz, frequency resolution, 1 Hz to 1 MHz
 INPUT_PORT = 1
 IF_FREQS_IN = [0.0, 50e6]
 
+NAVG = 100
+
 with lockin.Lockin(
     address=ADDRESS,
     port=PORT,
@@ -64,7 +66,7 @@ with lockin.Lockin(
     ig.set_frequencies(IF_FREQS_IN)
 
     lck.apply_settings()
-    pixel_dict = lck.get_pixels(100)
+    pixel_dict = lck.get_pixels(NAVG)
 
     og.set_amplitudes(0)
     og_2.set_amplitudes(0)

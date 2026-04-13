@@ -19,6 +19,7 @@ import utils
 INPUT_PORT = 1
 OUTPUT_PORT = 1
 freq = 100e6  # Hz
+NAVG = 10
 
 ADDRESS, PORT = utils.address_port_from_cli()
 EXT_REF = False  # set to True to use external 10 MHz reference
@@ -101,10 +102,15 @@ with pulsed.Pulsed(
 
     # Repeat the time sequence over the entire lookup tables.
     # Both frequency and scale are incremented every time
-    pls.run(period=10e-6, repeat_count=NFREQ, num_averages=1)
+    pls.run(period=10e-6, repeat_count=NFREQ, num_averages=NAVG)
     t_arr, data = pls.get_store_data()
 
     match_data = pls.get_template_matching_data(match_pair)
+
+match_data[0].shape = (NAVG, -1)
+match_data[1].shape = (NAVG, -1)
+match_data[0] = np.mean(match_data[0], axis=0)
+match_data[1] = np.mean(match_data[1], axis=0)
 
 # Plot a few of the time traces
 fig1, ax1 = plt.subplots(8, sharex=True, sharey=True, tight_layout=True, figsize=(12.8, 9.6))
