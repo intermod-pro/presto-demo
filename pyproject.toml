@@ -6,16 +6,20 @@ authors = [
 ]
 description = "Demo scripts for the Presto platform runnable in loop-back"
 license = "MIT"
+
 requires-python = ">= 3.10"
 dependencies = [
-    "numpy >= 1.24",
+    "matplotlib >= 3.8",
+    "numpy >= 1.25",
+    "intermod-presto",
 ]
 
-[tool.black]
-line-length = 99
 
-[tool.pylint.format]
-max-line-length = 99
+[dependency-groups]
+dev = [
+    "basedpyright>=1.39.0",
+    "pyqt6 >= 6.11",  # otherwise matplotlib 3.8 doesn't work in uv
+]
 
 [tool.pyright]
 typeCheckingMode = "standard"
@@ -24,14 +28,10 @@ reportDeprecated = "warning"
 reportMissingImports = false
 
 [tool.ruff]
-line-length = 99
+line-length = 100
 
-[tool.yapf]
-based_on_style = "pep8"
-column_limit = 99
+[tool.uv]
+config-settings-package = { intermod-presto = { editable_mode = "compat" } }
 
-[dependency-groups]
-dev = [
-    "basedpyright>=1.34.0",
-]
-
+[tool.uv.sources]
+intermod-presto = { path = "../presto-api", editable = true }
